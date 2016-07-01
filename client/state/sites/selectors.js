@@ -20,6 +20,7 @@ import {
 import createSelector from 'lib/create-selector';
 import { fromApi as seoTitleFromApi } from 'components/seo/meta-title-editor/mappings';
 import versionCompare from 'lib/version-compare';
+import getAttributes from 'lib/site/computed-attributes';
 
 /**
  * Returns a site object by its ID.
@@ -29,7 +30,8 @@ import versionCompare from 'lib/version-compare';
  * @return {?Object}        Site object
  */
 export function getSite( state, siteId ) {
-	return state.sites.items[ siteId ] || null;
+	const site = state.sites.items[ siteId ];
+	return site ? Object.assign( site, getAttributes( site ) ) : null;
 }
 
 /**
