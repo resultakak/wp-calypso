@@ -34,7 +34,7 @@ export const sitesSchema = {
 				is_following: { type: 'boolean' },
 				options: { type: 'object' },
 				meta: { type: 'object' },
-				user_can_manager: { type: 'boolean' },
+				user_can_manage: { type: 'boolean' },
 				is_vip: { type: 'boolean' },
 				is_multisite: { type: 'boolean' },
 				capabilities: {
