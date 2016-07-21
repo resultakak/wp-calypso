@@ -17,7 +17,9 @@ import TwitterPreview from 'components/seo/twitter-preview';
 import SearchPreview from 'components/seo/search-preview';
 import VerticalMenu from 'components/vertical-menu';
 import { SocialItem } from 'components/vertical-menu/items';
+import { buildSiteTitle } from 'components/seo/meta-title-editor/title-builder';
 import { getSelectedSite } from 'state/ui/selectors';
+import { getSeoTitleFormatsForSite } from 'state/sites/selectors';
 
 const ComingSoonMessage = translate => (
 	<div className="seo-preview-pane__message">
@@ -25,17 +27,17 @@ const ComingSoonMessage = translate => (
 	</div>
 );
 
-const GooglePreview = site =>
+const GooglePreview = ( site, seoTitle ) =>
 	<SearchPreview
-		title={ site.name }
+		title={ seoTitle }
 		url={ site.URL }
 		snippet={ site.description }
 	/>;
 
-const PreviewFacebook = site => (
+const PreviewFacebook = ( site, seoTitle ) => (
 	<div>
 		<FacebookPreview
-			title={ site.name }
+			title={ seoTitle }
 			url={ site.URL }
 			type="website"
 			description={ site.description }
@@ -43,7 +45,7 @@ const PreviewFacebook = site => (
 		/>
 		<div style={ { marginBottom: '2em' } } />
 		<FacebookPreview
-			title={ site.name }
+			title={ seoTitle }
 			url={ site.URL }
 			type="article"
 			description={ site.description }
@@ -89,6 +91,7 @@ export class SeoPreviewPane extends PureComponent {
 
 	render() {
 		const {
+			seoTitle,
 			site,
 			translate
 		} = this.props;
@@ -119,8 +122,8 @@ export class SeoPreviewPane extends PureComponent {
 				<div className="seo-preview-pane__preview-area">
 					<div className="seo-preview-pane__preview">
 						{ get( {
-							facebook: PreviewFacebook( site ),
-							google: GooglePreview( site ),
+							facebook: PreviewFacebook( site, seoTitle ),
+							google: GooglePreview( site, seoTitle )
 							twitter: PreviewTwitter( site )
 						}, selectedService, ComingSoonMessage( translate ) ) }
 					</div>
@@ -135,8 +138,14 @@ SeoPreviewPane.propTypes = {
 	type: PropTypes.oneOf( [ 'site', 'page', 'post' ] ).isRequired
 };
 
-const mapStateToProps = state => ( {
-	site: getSelectedSite( state )
-} );
+const mapStateToProps = state => {
+	const site = getSelectedSite( state );
+	const formats = getSeoTitleFormatsForSite( site );
+
+	return {
+		seoTitle: buildSiteTitle( formats.frontPage, site ),
+		site
+	};
+};
 
 export default connect( mapStateToProps, null )( localize( SeoPreviewPane ) );
