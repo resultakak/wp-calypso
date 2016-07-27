@@ -30,7 +30,7 @@ describe( 'selectors', () => {
 			const selected = getSelectedSite( {
 				sites: {
 					items: {
-						2916284: { ID: 2916284, name: 'WordPress.com Example Blog' }
+						2916284: { ID: 2916284, name: 'WordPress.com Example Blog', URL: 'https://example.com' }
 					}
 				},
 				ui: {

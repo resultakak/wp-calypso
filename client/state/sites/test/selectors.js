@@ -38,7 +38,7 @@ describe( 'selectors', () => {
 			const site = getSite( {
 				sites: {
 					items: {
-						2916284: { ID: 2916284, name: 'WordPress.com Example Blog' }
+						2916284: { ID: 2916284, name: 'WordPress.com Example Blog', URL: 'https://example.com' }
 					}
 				}
 			}, 2916284 );
@@ -50,12 +50,12 @@ describe( 'selectors', () => {
 			const site = getSite( {
 				sites: {
 					items: {
-						2916284: { ID: 2916284, name: 'WordPress.com Example Blog' }
+						2916284: { ID: 2916284, name: 'WordPress.com Example Blog', URL: 'https://example.com' }
 					}
 				}
 			}, 2916284 );
 
-			expect( site ).to.contain( { ID: 2916284, title: 'WordPress.com Example Blog', } );
+			expect( site ).to.contain( { ID: 2916284, title: 'WordPress.com Example Blog', domain: 'example.com', slug: 'example.com' } );
 			expect( site.options ).to.contain( { default_post_format: 'standard' } );
 		} );
 	} );
