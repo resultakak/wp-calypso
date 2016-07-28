@@ -442,7 +442,14 @@ const PostEditor = React.createClass( {
 			return;
 		}
 
-		if ( utils.isPublished( this.state.savedPost ) || utils.isPublished( this.state.post ) ) {
+		if (
+			utils.isPublished( this.state.savedPost ) ||
+			utils.isPublished( this.state.post ) ||
+			(
+				this.state.post.status === 'future' &&
+				utils.isFutureDated( this.state.post )
+			)
+		) {
 			callback = function() {};
 		} else {
 			this.setState( { isSaving: true } );
@@ -610,8 +617,11 @@ const PostEditor = React.createClass( {
 
 	onSaveDraftSuccess: function() {
 		const { post } = this.state;
+
 		if ( utils.isPublished( post ) ) {
 			this.onSaveSuccess( 'updated', 'view', post.URL );
+		} else if ( post.status === 'future' && utils.isFutureDated( post ) ) {
+			this.onSaveSuccess( 'scheduled', 'view', this.state.previewUrl );
 		} else {
 			this.onSaveSuccess();
 		}
