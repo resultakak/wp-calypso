@@ -172,10 +172,9 @@ clean:
 distclean:
 	@rm -rf node_modules
 
-# create list of translations, saved as `./calypso-strings.php`
+# create list of translations, saved as `./calypso-strings.pot`
 translate: node_modules $(CLIENT_CONFIG_FILE)
-	@CALYPSO_ENV=stage $(BUNDLER)
-	@CALYPSO_ENV=stage $(LIST_ASSETS) | xargs $(I18N_CALYPSO) --format php --output-file ./calypso-strings.php --array-name calypso_i18n_strings
+	@CALYPSO_ENV=stage $(I18N_CALYPSO) --format pot --output-file ./calypso-strings.pot $(JS_FILES)
 
 # install all git hooks
 githooks: githooks-commit githooks-push
