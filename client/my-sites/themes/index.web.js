@@ -13,7 +13,7 @@ export default function( router ) {
 
 	if ( config.isEnabled( 'manage/themes' ) ) {
 		if ( isLoggedIn ) {
-			router( '/design/:tier(free|premium)?', siteSelection, multiSite, makeNavigation, makeLayout );
+			router( '/design/:tier(free|premium)?', multiSite, makeNavigation, makeLayout );
 			router( '/design/:tier(free|premium)?/:site_id', siteSelection, singleSite, makeNavigation, makeLayout );
 		} else {
 			router( '/design/:tier(free|premium)?', loggedOut, makeLayout );
