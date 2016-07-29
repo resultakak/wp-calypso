@@ -33,10 +33,17 @@ export default React.createClass( {
 		domains: React.PropTypes.array,
 		ruleWhiteList: React.PropTypes.array,
 		domain: React.PropTypes.object,
+		isCompact: React.PropTypes.bool,
 		selectedSite: React.PropTypes.oneOfType( [
 			React.PropTypes.object,
 			React.PropTypes.bool
 		] ).isRequired
+	},
+
+	getDefaultProps() {
+		return {
+			isCompact: false
+		}
 	},
 
 	renewLink( count ) {
@@ -123,7 +130,12 @@ export default React.createClass( {
 				learnMoreUrl = support.MAP_EXISTING_DOMAIN_UPDATE_DNS;
 			}
 		}
-		return <Notice status="is-warning" className="domain-warnings-notice" showDismiss={ false } key="wrong-ns-mapped-domain">{ text } <a href={ learnMoreUrl }>{ this.translate( 'Learn more.' ) }</a>{ offendingList }</Notice>;
+		return <Notice
+			isCompact={ this.props.isCompact }
+			status="is-warning"
+			className="domain-warnings-notice"
+			showDismiss={ false }
+			key="wrong-ns-mapped-domain">{ text } <a href={ learnMoreUrl }>{ this.translate( 'Learn more.' ) }</a>{ offendingList }</Notice>;
 	},
 
 	expiredDomains() {
@@ -144,7 +156,11 @@ export default React.createClass( {
 			} );
 		}
 		renewLink = this.renewLink( expiredDomains.length );
-		return <Notice status="is-error" showDismiss={ false } key="expired-domains">{ text } { renewLink }</Notice>;
+		return <Notice
+			isCompact={ this.props.isCompact }
+			status="is-error"
+			showDismiss={ false }
+			key="expired-domains">{ text } { renewLink }</Notice>;
 	},
 
 	expiringDomains() {
@@ -166,7 +182,11 @@ export default React.createClass( {
 			} );
 		}
 		renewLink = this.renewLink( expiringDomains.length );
-		return <Notice status="is-error" showDismiss={ false } key="expiring-domains">{ text } { renewLink }</Notice>;
+		return <Notice
+			isCompact={ this.props.isCompact }
+			status="is-error"
+			showDismiss={ false }
+			key="expiring-domains">{ text } { renewLink }</Notice>;
 	},
 
 	newDomains() {
@@ -230,12 +250,17 @@ export default React.createClass( {
 			}
 		}
 
-		return <Notice status="is-warning" showDismiss={ false } key="new-domains">{ text }</Notice>;
+		return <Notice
+			isCompact={ this.props.isCompact }
+			status="is-warning"
+			showDismiss={ false }
+			key="new-domains">{ text }</Notice>;
 	},
 
 	unverifiedDomainNotice( domain ) {
 		return (
 			<Notice
+				isCompact={ this.props.isCompact }
 				status="is-error"
 				showDismiss={ false }
 				className="domain-warnings-notice"
@@ -251,7 +276,12 @@ export default React.createClass( {
 
 	unverifiedDomainsNotice( domains ) {
 		return (
-			<Notice status="is-error" showDismiss={ false } className="domain-warnings-notice" key="unverified-domains">
+			<Notice
+				isCompact={ this.props.isCompact }
+				status="is-error"
+				showDismiss={ false }
+				className="domain-warnings-notice"
+				key="unverified-domains">
 				{ this.translate( 'Urgent! Some of your domains may be lost forever because your email address is not verified:' ) }
 				<ul>{
 					domains.map( ( domain ) => {
@@ -280,7 +310,12 @@ export default React.createClass( {
 				domain.googleAppsSubscription &&
 				domain.googleAppsSubscription.pendingUsers &&
 				domain.googleAppsSubscription.pendingUsers.length !== 0 );
-		return pendingDomains.length !== 0 && <PendingGappsTosNotice key="pending-gapps-tos-notice" siteSlug={ this.props.selectedSite && this.props.selectedSite.slug } domains={ pendingDomains } section="domain-management" />;
+		return pendingDomains.length !== 0 && <PendingGappsTosNotice
+				isCompact={ this.props.isCompact }
+				key="pending-gapps-tos-notice"
+				siteSlug={ this.props.selectedSite && this.props.selectedSite.slug }
+				domains={ pendingDomains }
+				section="domain-management" />;
 	},
 
 	componentWillMount: function() {
