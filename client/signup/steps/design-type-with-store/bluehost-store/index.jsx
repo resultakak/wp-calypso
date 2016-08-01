@@ -12,8 +12,6 @@ import StepHeader from 'signup/step-header';
 import Button from 'components/button';
 import { abtest } from 'lib/abtest';
 
-import BluehostLogo from './bluehost-logo';
-
 export default React.createClass( {
 	displayName: 'BluehostStoreStep',
 
@@ -39,7 +37,7 @@ export default React.createClass( {
 
 				<div className="design-type-with-store__container">
 					<div className="design-type-with-store__copy">
-						<BluehostLogo />
+						<img src="/calypso/images/signup/bluehost-logo.png" className="design-type-with-store__logo" />
 						{ this.translate( 'We\'ve partnered with BlueHost, a top-notch WordPress hosts with a knack for building great e-commerce stores using WooCommerce.' ) }
 					</div>
 
