@@ -8,6 +8,7 @@ import React, { PropTypes } from 'react';
  */
 import FoldableCard from 'components/foldable-card';
 import GuidedTransferInProgress from './guided-transfer-in-progress';
+import GuidedTransferAwaitingPurchase from '../guided-transfer/awaiting-purchase-notice';
 import GuidedTransferOptions from 'my-sites/exporter/guided-transfer-options';
 import GuidedTransferDetails from 'my-sites/exporter/guided-transfer-details';
 import AdvancedSettings from 'my-sites/exporter/advanced-settings';
@@ -51,7 +52,9 @@ export default React.createClass( {
 			shouldShowProgress,
 			isExporting,
 			isGuidedTransferInProgress,
+			isGuidedTransferAwaitingPurchase,
 			showGuidedTransferOptions,
+			siteSlug,
 		} = this.props;
 		const siteId = this.props.site.ID;
 
@@ -101,6 +104,8 @@ export default React.createClass( {
 			<div className="exporter">
 				{ notice }
 				{ isGuidedTransferInProgress && <GuidedTransferInProgress /> }
+				{ isGuidedTransferAwaitingPurchase &&
+					<GuidedTransferAwaitingPurchase siteSlug={ siteSlug } /> }
 				<FoldableCard
 					actionButtonIcon="cog"
 					header={
@@ -123,7 +128,7 @@ export default React.createClass( {
 						onClickExport={ exportSelectedItems }
 					/>
 				</FoldableCard>
-				{ showGuidedTransferOptions && <GuidedTransferOptions siteSlug={ this.props.siteSlug } /> }
+				{ showGuidedTransferOptions && <GuidedTransferOptions siteSlug={ siteSlug } /> }
 				{ showGuidedTransferOptions && <GuidedTransferDetails /> }
 				{ isExporting && <Interval onTick={ fetchStatus } period={ EVERY_SECOND } /> }
 			</div>

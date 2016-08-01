@@ -39,9 +39,10 @@ function mapStateToProps( state ) {
 		didFail: getExportingState( state, siteId ) === States.FAILED,
 		showGuidedTransferOptions: config.isEnabled( 'manage/export/guided-transfer' ),
 
-		// This will be replaced with a Redux selector once we've built out
+		// These will be replaced with Redux selectors once we've built out
 		// the reducers
 		isGuidedTransferInProgress: false,
+		isGuidedTransferAwaitingPurchase: false,
 	};
 }
 
