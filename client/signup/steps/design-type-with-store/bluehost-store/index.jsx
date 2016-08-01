@@ -28,6 +28,10 @@ export default React.createClass( {
 		}
 	},
 
+	getPrice() {
+		return ( 'bluehost' === abtest( 'signupStoreBenchmarking' ) ) ? '$3.95' : '$12.95';
+	},
+
 	render() {
 		return (
 			<div>
@@ -44,7 +48,7 @@ export default React.createClass( {
 
 					<LoggedOutForm className="design-type-with-store__form" onSubmit={ this.onSubmit }>
 						<span className="design-type-with-store__price-text"> { this.translate( 'Starting at' ) } </span>
-						<span className="design-type-with-store__price"> <b>$12.95</b>/mo </span>
+						<span className="design-type-with-store__price"> <b>{ this.getPrice() }</b>/mo </span>
 						<FormButton className="design-type-with-store__form-submit"> { this.translate( 'Create Store' ) } </FormButton>
 					</LoggedOutForm>
 				</div>
