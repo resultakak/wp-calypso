@@ -67,11 +67,11 @@
 	flex-flow: row wrap;
 	max-width: 572px;
 	margin: 0 auto;
-	border: 1px solid #c8d7e1;
 }
 
 .design-type-with-store__copy {
-	padding: 32px;
+	border: 1px solid #c8d7e1;
+	padding: 32px 32px 28px 32px;
 	background-color: white;
 	font-size: 15px;
 	font-weight: 400;
@@ -79,15 +79,26 @@
 	color: #3d596d;
 	max-width: 402px;
 	box-sizing: border-box;
+	margin: 0 auto;
 }
 
 .design-type-with-store__form {
+	border: 1px solid #c8d7e1;
+	border-left: hidden;
 	flex-grow: 1;
-	margin: 0;
+	margin: 0 auto;
 	padding: 32px 24px;
 	text-align: center;
 	background-color: #f3f6f8;
 	box-sizing: border-box;
+	max-width: 402px;
+}
+
+@media only screen and (max-device-width : 619px) {
+	.design-type-with-store__form {
+		border: 1px solid #c8d7e1;
+		border-top: hidden;
+	}
 }
 
 .design-type-with-store__price-text {

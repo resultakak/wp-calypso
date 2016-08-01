@@ -7,7 +7,6 @@ import React from 'react';
  * Internal dependencies
  */
 import Gridicon from 'components/gridicon';
-import LoggedOutForm from 'components/logged-out-form';
 import FormButton from 'components/forms/form-button';
 import StepHeader from 'signup/step-header';
 import Button from 'components/button';
@@ -17,9 +16,7 @@ import SitegroundLogo from './siteground-logo';
 export default React.createClass( {
 	displayName: 'SitegroundStoreStep',
 
-	onSubmit( event ) {
-		event.preventDefault();
-
+	redirectToPartner() {
 		window.location.href = 'https://www.siteground.com/woocommerce/step1.htm';
 	},
 
@@ -39,11 +36,13 @@ export default React.createClass( {
 						</div>
 					</div>
 
-					<LoggedOutForm className="design-type-with-store__form" onSubmit={ this.onSubmit }>
+					<div className="design-type-with-store__form">
 						<span className="design-type-with-store__price-text"> { this.translate( 'Starting at' ) } </span>
 						<span className="design-type-with-store__price"> <b>$3.95</b>/mo </span>
-						<FormButton className="design-type-with-store__form-submit"> { this.translate( 'Create Store' ) } </FormButton>
-					</LoggedOutForm>
+						<FormButton className="design-type-with-store__form-submit" onClick={ this.redirectToPartner }>
+							{ this.translate( 'Create Store' ) }
+						</FormButton>
+					</div>
 				</div>
 
 				<div className="design-type-with-store__back-button-wrapper">
