@@ -9,7 +9,7 @@ import { translate } from 'i18n-calypso';
 /**
  * Internal Dependencies
  */
-import Main from 'components/main';
+import ReaderMain from 'components/reader-main';
 import Button from 'components/button';
 import Gravatar from 'components/gravatar';
 import StickyPanel from 'components/sticky-panel';
@@ -35,7 +35,7 @@ export class FullPostView extends React.Component {
 	render() {
 		/*eslint-disable react/no-danger*/
 		return (
-			<Main className="reader-full-post">
+			<ReaderMain className="reader-full-post">
 				<StickyPanel className="reader-full-post__back-container">
 					<Button className="reader-full-post__back" borderless compact onClick={ this.handleBack }>
 						<Gridicon icon="arrow-left" /> { translate( 'Back' ) }
@@ -44,7 +44,7 @@ export class FullPostView extends React.Component {
 				<div className="reader-full-post__content">
 					<div className="reader-full-post__sidebar">
 						<StickyPanel>
-							<Gravatar className="reader-full-post__gravatar" size={ 192 } user={ this.props.post.author } />
+							<Gravatar className="reader-full-post__gravatar" size={ 96 } user={ this.props.post.author } />
 						</StickyPanel>
 					</div>
 					<div className="reader-full-post__story">
@@ -52,7 +52,7 @@ export class FullPostView extends React.Component {
 						<div className="reader__full-post-content" dangerouslySetInnerHTML={ { __html: this.props.post.content } } />
 					</div>
 				</div>
-			</Main>
+			</ReaderMain>
 		);
 	}
 }
