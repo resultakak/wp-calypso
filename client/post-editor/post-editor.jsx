@@ -666,7 +666,7 @@ const PostEditor = React.createClass( {
 			message = 'published';
 		}
 
-		this.onSaveSuccess( message, 'view', savedPost.URL );
+		this.onSaveSuccess( message, ( message === 'published' ? 'view' : 'preview' ), savedPost.URL );
 		this.toggleSidebar();
 	},
 
