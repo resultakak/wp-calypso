@@ -10,6 +10,8 @@ import { translate } from 'i18n-calypso';
  * Internal Dependencies
  */
 import Main from 'components/main';
+import Button from 'components/button';
+import Gravatar from 'components/gravatar';
 import StickyPanel from 'components/sticky-panel';
 import Gridicon from 'components/gridicon';
 import { setSection } from 'state/ui/actions';
@@ -21,18 +23,35 @@ import { fetchPost } from 'lib/feed-post-store/actions';
 import ReaderFullPostHeader from './header';
 
 export class FullPostView extends React.Component {
+	constructor( props ) {
+		super( props );
+		this.handleBack = this.handleBack.bind( this );
+	}
+
+	handleBack() {
+		this.props.onClose && this.props.onClose();
+	}
+
 	render() {
 		/*eslint-disable react/no-danger*/
 		return (
 			<Main className="reader-full-post">
-				<StickyPanel>
-					<div className="reader-full-post__back">
-						<Gridicon icon="arrow-left" />
-					{ translate( 'Back' ) }
-					</div>
+				<StickyPanel className="reader-full-post__back-container">
+					<Button className="reader-full-post__back" borderless compact onClick={ this.handleBack }>
+						<Gridicon icon="arrow-left" /> { translate( 'Back' ) }
+					</Button>
 				</StickyPanel>
-				<ReaderFullPostHeader post={ this.props.post } />
-				<div dangerouslySetInnerHTML={ { __html: this.props.post.content } } />
+				<div className="reader-full-post__content">
+					<div className="reader-full-post__sidebar">
+						<StickyPanel>
+							<Gravatar className="reader-full-post__gravatar" size={ 192 } user={ this.props.post.author } />
+						</StickyPanel>
+					</div>
+					<div className="reader-full-post__story">
+						<ReaderFullPostHeader post={ this.props.post } />
+						<div className="reader__full-post-content" dangerouslySetInnerHTML={ { __html: this.props.post.content } } />
+					</div>
+				</div>
 			</Main>
 		);
 	}
@@ -100,7 +119,11 @@ export class FullPostFluxContainer extends React.Component {
 
 	render() {
 		return this.state.post
-			? <FullPostView post={ this.state.post } site={ this.state.site } feed={ this.state.feed } />
+			? <FullPostView
+					onClose={ this.props.onClose }
+					post={ this.state.post }
+					site={ this.state.site }
+					feed={ this.state.feed } />
 			: null;
 	}
 }
