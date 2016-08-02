@@ -5,7 +5,6 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
 import pickBy from 'lodash/pickBy';
-import merge from 'lodash/merge';
 
 /**
  * Internal dependencies
@@ -16,7 +15,7 @@ import ThemesSelection from './themes-selection';
 import PageViewTracker from 'lib/analytics/page-view-tracker';
 import { getQueryParams, getThemesList } from 'state/themes/themes-list/selectors';
 import { addTracking } from './helpers';
-import { bindOptionsToState, bindOptionsToDispatch } from './theme-options';
+import { bindOptionsToState, bindOptionsToDispatch, mergeProps } from './theme-options';
 
 const optionShape = PropTypes.shape( {
 	label: PropTypes.string,
@@ -140,29 +139,6 @@ const ThemeShowcase = React.createClass( {
 		);
 	}
 } );
-
-export const mergeProps = ( stateProps, dispatchProps, ownProps ) => {
-	const options = merge(
-		{},
-		stateProps.options,
-		dispatchProps
-	);
-
-	return Object.assign(
-		{},
-		ownProps,
-		stateProps,
-		{
-			options,
-			defaultOption: options[ ownProps.defaultOption ],
-			secondaryOption: options[ ownProps.secondaryOption ],
-			getScreenshotOption: function( theme ) {
-				const screenshotOption = ownProps.getScreenshotOption( theme );
-				return options[ screenshotOption ];
-			}
-		}
-	);
-};
 
 export default connect(
 	( state, { options } ) => ( {
