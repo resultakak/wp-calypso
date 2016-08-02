@@ -166,7 +166,7 @@ function chooseSecondary( primary, prefered, el, target, w, h ) {
 }
 
 function offset( pos, el, target ) {
-	const pad = 10;
+	const pad = 15;
 	const tipRect = getBoundingClientRect( el );
 
 	if ( ! tipRect ) {

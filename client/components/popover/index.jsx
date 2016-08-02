@@ -6,8 +6,10 @@ import ReactDOM from 'react-dom';
 import debugFactory from 'debug';
 import classNames from 'classnames';
 import clickOutside from 'click-outside';
+import uid from 'component-uid';
 import raf from 'component-raf';
 
+window.uid = uid;
 /**
  * Internal dependencies
  */
@@ -46,14 +48,15 @@ class Popover extends Component {
 			top: -99999,
 			positionClass: `popover-${ Popover.defaultProps.top }`
 		};
-
-		this.id = `pop-${__popoverNumber}`;
-		__popovers.add( this.id );
-		__popoverNumber++;
-		this.debug( 'init' );
 	}
 
 	componentDidMount() {
+		this.id = this.props.id || `pop-${ uid( 16 ) }`;
+		__popovers.add( this.id );
+		__popoverNumber++;
+		this.debug( 'init' );
+		debug( 'current popover instances: ', __popovers.size );
+
 		this.bindEscKeyListener();
 		this.bindDebouncedReposition();
 		bindWindowListeners();
@@ -61,6 +64,10 @@ class Popover extends Component {
 
 	componentWillReceiveProps( nextProps ) {
 		if ( ! this.domContainer ) {
+			return null;
+		}
+
+		if ( ! nextProps.isVisible ) {
 			return null;
 		}
 
@@ -83,10 +90,13 @@ class Popover extends Component {
 	}
 
 	componentWillUnmount() {
+		this.debug( 'unmounting .... ' );
 		this.unbindClickoutHandler();
 		this.unbindDebouncedReposition();
 		this.unbindEscKeyListener();
+		__popovers.delete( this.id );
 		unbindWindowListeners();
+		debug( 'current popover instances: ', __popovers.size );
 	}
 
 	debug( string, ...args ) {
@@ -117,7 +127,7 @@ class Popover extends Component {
 			return null;
 		}
 
-		this.debug( 'removing escKey handler ...' );
+		this.debug( 'unbinding `escKey` listener ...' );
 		document.removeEventListener( 'keydown', this.onKeydown, true );
 	}
 
@@ -132,7 +142,8 @@ class Popover extends Component {
 	// --- cliclout side ---
 	bindClickoutHandler( el = this.domContainer ) {
 		if ( this._unbindClickHandler ) {
-			return this.debug( 'clickout event already bound' );
+			this.debug( 'clickout event already bound' );
+			return null;
 		}
 
 		this.debug( 'binding `clickout` event' );
@@ -141,7 +152,7 @@ class Popover extends Component {
 
 	unbindClickoutHandler() {
 		if ( this._unbindClickHandler ) {
-			this.debug( 'unbinding `clickout` event' );
+			this.debug( 'unbinding `clickout` listener ...' );
 			this._unbindClickHandler();
 			this._unbindClickHandler = null;
 		}
@@ -165,10 +176,10 @@ class Popover extends Component {
 
 		window.removeEventListener( 'scroll', this.onWindowChange, true );
 		window.removeEventListener( 'resize', this.onWindowChange, true );
+		this.debug( 'unbinding `debounce reposition` ...' );
 	}
 
 	onWindowChange() {
-		this.debug( 'debouncing position' );
 		this.willReposition = raf( this.setPosition );
 	}
 
@@ -183,6 +194,10 @@ class Popover extends Component {
 	 * @return {Object} reposition parameters
 	 */
 	computePosition() {
+		if ( ! this.props.isVisible ) {
+			return null;
+		}
+
 		const { domContainer, domContext } = this;
 		const { position } = this.props;
 
@@ -224,6 +239,10 @@ class Popover extends Component {
 	}
 
 	setDOMBehavior( domContainer ) {
+		if ( ! domContainer ) {
+			return null;
+		}
+
 		this.debug( 'setting DOM behavior' );
 
 		// store DOM element referencies
@@ -244,20 +263,20 @@ class Popover extends Component {
 	}
 
 	render() {
-		const { isVisible, context } = this.props;
+		const { isVisible, context, className } = this.props;
 
 		if ( ! isVisible ) {
-			this.debug( 'Popover is not visible.' );
+			//this.debug( 'Popover is not visible.' );
 			return null;
 		}
 
 		if ( ! context ) {
-			this.debug( 'No `context` to tie the Popover' );
+			//this.debug( 'No `context` to tie the Popover' );
 			return null;
 		}
 
 		const classes = classNames(
-			'popover__container',
+			className,
 			this.state.positionClass
 		);
 
@@ -285,13 +304,14 @@ Popover.propTypes = {
 	className: PropTypes.string,
 	closeOnEsc: PropTypes.bool,
 	position: PropTypes.string,
+	id: PropTypes.string,
 
 	onClose: PropTypes.func.isRequired,
 	onShow: PropTypes.func,
 };
 
 Popover.defaultProps = {
-	className: 'popover',
+	className: 'popover__container',
 	closeOnEsc: true,
 	position: 'top',
 	isVisible: false,
