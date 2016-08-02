@@ -11,7 +11,6 @@ import PureRenderMixin from 'react-pure-render/mixin';
 import Popover from 'components/popover';
 import PopoverMenu from 'components/popover/menu';
 import PopoverMenuItem from 'components/popover/menu-item';
-import PostSchedule from 'components/post-schedule';
 
 const Popovers = React.createClass( {
 	mixins: [ PureRenderMixin ],
@@ -98,7 +97,11 @@ const Popovers = React.createClass( {
 					position={ this.state.popoverPosition }
 					context={ this.refs && this.refs.popoverButton }
 				>
-					<PostSchedule />
+					<div style={ {
+						padding: '10px'
+					} }>
+						Simple Popover Instance
+					</div>
 				</Popover>
 			</div>
 		);

@@ -7,7 +7,6 @@ import debugFactory from 'debug';
 import classNames from 'classnames';
 import clickOutside from 'click-outside';
 import uid from 'component-uid';
-import raf from 'component-raf';
 
 window.uid = uid;
 /**
@@ -170,7 +169,7 @@ class Popover extends Component {
 
 	unbindDebouncedReposition() {
 		if ( this.willReposition ) {
-			raf.cancel( this.willReposition );
+			window.cancelAnimationFrame( this.willReposition );
 			this.willReposition = null;
 		}
 
@@ -180,7 +179,7 @@ class Popover extends Component {
 	}
 
 	onWindowChange() {
-		this.willReposition = raf( this.setPosition );
+		this.willReposition = window.requestAnimationFrame( this.setPosition );
 	}
 
 	getPositionClass( position = this.props.position ) {
