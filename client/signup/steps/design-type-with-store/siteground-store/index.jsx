@@ -32,7 +32,10 @@ export default React.createClass( {
 					<div className="design-type-with-store__copy">
 						<SitegroundLogo />
 						<div className="design-type-with-store__text">
-							{ this.translate( 'We\'ve partnered with SiteGround, a top-notch WordPress hosts with a knack for building great e-commerce stores using WooCommerce.' ) }
+							{ this.translate(
+								'We\'ve partnered with SiteGround, a top-notch WordPress hosts ' +
+								'with a knack for building great e-commerce stores using WooCommerce.'
+							) }
 						</div>
 					</div>
 
@@ -52,7 +55,6 @@ export default React.createClass( {
 					</Button>
 				</div>
 			</div>
-
 		);
 	}
 

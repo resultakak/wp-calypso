@@ -38,7 +38,10 @@ export default React.createClass( {
 				<div className="design-type-with-store__container">
 					<div className="design-type-with-store__copy">
 						<img src="/calypso/images/signup/bluehost-logo.png" className="design-type-with-store__logo" />
-						{ this.translate( 'We\'ve partnered with BlueHost, a top-notch WordPress hosts with a knack for building great e-commerce stores using WooCommerce.' ) }
+						{ this.translate(
+							'We\'ve partnered with BlueHost, a top-notch WordPress hosts ' +
+							'with a knack for building great e-commerce stores using WooCommerce.'
+						) }
 					</div>
 
 					<div className="design-type-with-store__form">

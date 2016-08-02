@@ -63,15 +63,15 @@ export default React.createClass( {
 			case 'bluehost':
 			case 'bluehostWithWoo':
 				return (
-					<BluehostStoreStep { ... this.props } onBackClick={ this.handleStoreBackClick }/>
+					<BluehostStoreStep { ... this.props } onBackClick={ this.handleStoreBackClick } />
 				);
 			case 'siteground':
 				return (
-					<SitegroundStoreStep { ... this.props } onBackClick={ this.handleStoreBackClick }/>
+					<SitegroundStoreStep { ... this.props } onBackClick={ this.handleStoreBackClick } />
 				);
 			default:
 				return (
-					<PressableStoreStep	{ ... this.props } ref={ this.onPressableStoreStepRef } onBackClick={ this.handleStoreBackClick }/>
+					<PressableStoreStep { ... this.props } ref={ this.onPressableStoreStepRef } onBackClick={ this.handleStoreBackClick } />
 				);
 		}
 	},
