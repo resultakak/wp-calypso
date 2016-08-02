@@ -21,7 +21,7 @@ const AwaitingPurchaseNotice = props => {
 				"then we'll get started!" ) }
 		>
 			<NoticeAction href={ `/settings/export/guided/${ props.siteSlug }` }>
-				{ props.translate( 'Purchase' ) }
+				{ props.translate( 'Continue' ) }
 			</NoticeAction>
 		</Notice>
 	);
