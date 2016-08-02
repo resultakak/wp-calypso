@@ -98,7 +98,7 @@ const bindToTheme = ( state, { site, options } ) => {
 
 const ConnectedCurrentTheme = connect( bindToSite )( connect(
 	bindToState,
-	bindOptionsToDispatch( 'current theme' ),
+	bindOptionsToDispatch,
 	mergeProps
 )( connect( bindToTheme )( CurrentTheme ) ) );
 
@@ -108,5 +108,6 @@ export default props => (
 		customize,
 		info,
 		support
-	} } />
+	} }
+	source="current theme" />
 );

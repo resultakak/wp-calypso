@@ -170,6 +170,6 @@ export default connect(
 		themesList: getThemesList( state ),
 		options: bindOptionsToState( options, state )
 	} ),
-	bindOptionsToDispatch( 'showcase' ),
+	bindOptionsToDispatch,
 	mergeProps
 )( localize( ThemeShowcase ) );
