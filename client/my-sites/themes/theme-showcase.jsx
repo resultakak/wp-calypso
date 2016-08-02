@@ -15,7 +15,7 @@ import ThemesSelection from './themes-selection';
 import PageViewTracker from 'lib/analytics/page-view-tracker';
 import { getQueryParams, getThemesList } from 'state/themes/themes-list/selectors';
 import { addTracking } from './helpers';
-import { bindOptionsToState, bindOptionsToDispatch, mergeProps } from './theme-options';
+import { bindOptions } from './theme-options';
 
 const optionShape = PropTypes.shape( {
 	label: PropTypes.string,
@@ -141,11 +141,8 @@ const ThemeShowcase = React.createClass( {
 } );
 
 export default connect(
-	( state, { options } ) => ( {
+	state => ( {
 		queryParams: getQueryParams( state ),
 		themesList: getThemesList( state ),
-		options: bindOptionsToState( options, state )
-	} ),
-	bindOptionsToDispatch,
-	mergeProps
-)( localize( ThemeShowcase ) );
+	} )
+)( connect( ...bindOptions )( localize( ThemeShowcase ) ) );
